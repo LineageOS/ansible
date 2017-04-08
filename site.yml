@@ -10,3 +10,10 @@
   roles:
     - nginx
     - jenkins
+- name: www
+  hosts: www
+  become: yes
+  roles:
+    - nginx
+    - jenkins_ssh_slave
+    - www

@@ -1,0 +1,28 @@
+server {
+    listen [::]:80;
+    listen 80;
+    server_name www.lineageos.org new-www.lineageos.org lineageos.org;
+    location /.well-known/ {
+        alias /var/www/www.lineageos.org/.well-known/;
+    }
+    location / {
+        rewrite     ^   https://$server_name$request_uri? permanent;
+    }
+
+}
+
+server {
+    listen [::]:443 ssl;
+    listen 443 ssl;
+    server_name www.lineageos.org lineageos.org;
+
+    ssl_certificate /etc/letsencrypt/live/www.lineageos.org/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/www.lineageos.org/privkey.pem;
+
+
+    location / {
+        root /var/www/www.lineageos.org/;
+      }
+
+}
+

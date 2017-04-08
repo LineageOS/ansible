@@ -1,0 +1,28 @@
+server {
+    listen [::]:80;
+    listen 80;
+    server_name wiki.lineageos.org;
+    location /.well-known/ {
+        alias /var/www/wiki.lineageos.org/.well-known/;
+    }
+    location / {
+        rewrite     ^   https://$server_name$request_uri? permanent;
+    }
+
+}
+
+server {
+    listen [::]:443 ssl;
+    listen 443 ssl;
+    server_name wiki.lineageos.org;
+
+    ssl_certificate /etc/letsencrypt/live/wiki.lineageos.org/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/wiki.lineageos.org/privkey.pem;
+
+
+    location / {
+        root /var/www/wiki.lineageos.org/;
+      }
+
+}
+

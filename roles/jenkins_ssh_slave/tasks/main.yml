@@ -1,0 +1,23 @@
+---
+#adduser jenkins
+#add ssh key for jenkins
+- name: install required packages
+  apt:
+    name: "{{item}}"
+  with_items:
+    - openjdk-8-jdk
+- name: Add jenkins group
+  group:
+    name: jenkins
+
+- name: Add Jenkins User
+  user:
+    name: jenkins
+    group: jenkins
+    home: /opt/jenkins
+
+- name: Add Jenkins SSH key
+  authorized_key:
+    user: jenkins
+    state: present
+    key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+s953W3b1J+wU2u6uxN9gw/Pi5quW7w4W9neSrmeiJZdsynLIZmUSWx9xIj1sCOxuMzM/1dEEC38dvh3KOO56QE0rOe+bu2sB7947q0nizWAebrVV9Nq33h0qcz1IoKSlWKVF+eM9aFTvB6gfICKZVnc1ml6UQQjed9F+i79v+eLUx+EOUUhKJwiEc8/+nLxP07KFpcTesBHCkEf/joYrZagR5r8GdwO7eYOU+sJIao2MWCJIlYB67Vwd8hWK2UD6dIyyja7Fxna6x2EYp30Ns9/hndA9tivMpXZeW0AkNf6mlFo6y+lOhUhgis4wqSBBN9+eP4Yc+UV8bGbJhC7h jenkins@jenkins.lineageos.org"

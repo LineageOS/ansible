@@ -1,0 +1,38 @@
+---
+- name: install dependencies
+  apt:
+    name: "{{item}}"
+  with_items:
+    - git
+    - ruby
+    - ruby-bundler
+    - ruby-dev
+    - build-essential
+    - zlib1g-dev
+    - libxml2
+
+- name: create folders
+  file:
+    path: "{{item}}"
+    owner: jenkins
+    group: jenkins
+    state: directory
+  with_items:
+    - /var/www/wiki.lineageos.org
+    - /var/www/www.lineageos.org
+
+- name: nginx config (wiki)
+  template:
+    src: templates/wiki.conf.j2
+    dest: /etc/nginx/sites-enabled/wiki
+    owner: root
+    group: root
+    mode: 0644
+
+- name: nginx config (www)
+  template:
+    src: templates/www.conf.j2
+    dest: /etc/nginx/sites-enabled/www
+    owner: root
+    group: root
+    mode: 0644
