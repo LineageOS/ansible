@@ -1,4 +1,7 @@
 ---
+- name: Set hostname
+  hostname:
+    name: "{{inventory_hostname}}.lineageos.org"
 - name: Install base packages
   apt:
     name: "{{item}}"

@@ -7,6 +7,12 @@
 - name: Install jenkins
   apt:
     name: jenkins
+
+- name: Install jenkins requirements
+  apt:
+    name: "{{item}}"
+  with_items:
+    - git
 - name: nginx config
   template:
     src: templates/nginx.conf.j2
