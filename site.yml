@@ -1,0 +1,12 @@
+---
+- name: base
+  hosts: all
+  become: yes
+  roles:
+    - base
+- name: jenkins
+  hosts: jenkins
+  become: yes
+  roles:
+    - nginx
+    - jenkins

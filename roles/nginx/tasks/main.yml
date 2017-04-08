@@ -1,0 +1,16 @@
+---
+- name: install packages
+  apt:
+    name: "{{item}}"
+    state: present
+  with_items:
+    - nginx
+    - letsencrypt
+- cron:
+    name: "renew certs"
+    special_time: "daily"
+    job: "letsencrypt renew"
+- cron:
+    name: "reload nginx"
+    special_time: "daily"
+    job: "systemctl reload nginx"

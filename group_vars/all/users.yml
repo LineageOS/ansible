@@ -1,0 +1,7 @@
+---
+users:
+  - username: zifnab
+    groups: ['sudo']
+    shell: /usr/bin/zsh
+    ssh_key:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCoRnyuFWRqvGprQYgQF6C35mGN8JHLyi9MqG3dfj0LoiuAtLbcYVB7qiMMzBhsb87TIOIYefOae8zmnT8HwBtfM+R8xfE+j3MC7DqBTunW8/1ftiUp7OKgBk1wUU0TJ8AcVXXU7a4AlowhgmgCT4+ksGuhE2w2Ex0p7kRGwj9UXLohR424qF2rj5q14nSNogqou+hr58HGBmTpMULb8F9g480mkhURPrRxWU+c89mez4FuHh9aL+nSGwjI70U8gZBiyDcrHp91UeLWezBjRkw+mUZOMZKacUci/zO9Sr/jOS7zU4WJzT2TBfFTMzAvlJ9Mk2uOahh1i8TsJQL/XeRh zifnab@phenom.zifnab.net"

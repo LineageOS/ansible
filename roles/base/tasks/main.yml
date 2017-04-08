@@ -1,0 +1,46 @@
+---
+- name: Install base packages
+  apt:
+    name: "{{item}}"
+  with_items:
+    - zsh
+    - htop
+- name: Create Groups
+  group:
+    name: "{{item.username}}"
+  with_items:
+    - "{{users}}"
+- name: Creating Users
+  user:
+    name: "{{item.username}}"
+    group: "{{item.username}}"
+    groups: "{{item.groups | join(',') }}"
+    shell: "{{item.shell}}"
+  with_items: "{{users}}"
+- name: SSH Keys
+  authorized_key:
+    user: "{{item.0.username}}"
+    key: "{{item.1}}"
+  with_subelements:
+    - "{{users}}"
+    - ssh_key
+- name: Enable sudo for user
+  copy:
+    content: "{{item.username}} ALL=(ALL) NOPASSWD: ALL"
+    dest: "/etc/sudoers.d/{{item.username}}"
+  with_items: "{{users}}"
+
+- name: Disallow password authentication
+  lineinfile: dest=/etc/ssh/sshd_config
+              regexp="^PasswordAuthentication"
+              line="PasswordAuthentication no"
+              state=present
+  notify: restart ssh
+
+- name: Disallow root SSH access
+  lineinfile: dest=/etc/ssh/sshd_config
+              regexp="^PermitRootLogin"
+              line="PermitRootLogin no"
+              state=present
+  notify: restart ssh
+

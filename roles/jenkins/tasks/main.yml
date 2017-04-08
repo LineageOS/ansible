@@ -1,0 +1,16 @@
+---
+- name: Add jenkins apt repo key
+  apt_key: url=https://pkg.jenkins.io/debian/jenkins.io.key state=present
+- name: Add jenkins apt repo
+  apt_repository: repo='deb http://pkg.jenkins.io/debian binary/' state=present
+
+- name: Install jenkins
+  apt:
+    name: jenkins
+- name: nginx config
+  template:
+    src: templates/nginx.conf.j2
+    dest: /etc/nginx/sites-enabled/jenkins
+    owner: root
+    group: root
+    mode: 0644
