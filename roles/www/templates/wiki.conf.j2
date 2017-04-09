@@ -22,6 +22,7 @@ server {
 
     location / {
         root /var/www/wiki.lineageos.org/;
+        try_files $uri $uri.html;
       }
 
 }
