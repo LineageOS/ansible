@@ -1,0 +1,61 @@
+---
+
+- name: Install dependencies
+  apt:
+    name: "{{item}}"
+    state: present
+  with_items:
+    - python
+    - bc
+    - yasm
+    - rsync
+    - schedtool
+    - imagemagick
+    - git-core
+    - gnupg
+    - flex
+    - bison
+    - gperf
+    - build-essential
+    - zip
+    - curl
+    - zlib1g-dev
+    - gcc-multilib
+    - g++-multilib
+    - libc6-dev-i386
+    - lib32ncurses5-dev
+    - x11proto-core-dev
+    - libx11-dev
+    - lib32z-dev
+    - ccache
+    - libgl1-mesa-dev
+    - libxml2-utils
+    - xsltproc
+    - unzip
+  when: ansible_distribution == "Ubuntu" and ansible_distribution_release == "trusty"
+
+- name: Install Java PPA (trusty)
+  apt_repository:
+    repo: "ppa:openjdk-r/ppa"
+    state: present
+- name: Install Java
+  apt:
+    name: openjdk-8-jdk-headless
+    state: present
+- name: Install Repo
+  shell: curl https://commondatastorage.googleapis.com/git-repo-downloads/repo > /usr/local/bin/repo && chmod 755 /usr/local/bin/repo
+  args:
+    creates: /usr/local/bin/repo
+- name: Add jenkins group
+  group:
+    name: jenkins
+- name: Add Jenkins user
+  user:
+    name: jenkins
+    group: jenkins
+    home: /mnt/jenkins
+- name: Add Jenkins ssh key
+  authorized_key:
+    user: jenkins
+    state: present
+    key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+s953W3b1J+wU2u6uxN9gw/Pi5quW7w4W9neSrmeiJZdsynLIZmUSWx9xIj1sCOxuMzM/1dEEC38dvh3KOO56QE0rOe+bu2sB7947q0nizWAebrVV9Nq33h0qcz1IoKSlWKVF+eM9aFTvB6gfICKZVnc1ml6UQQjed9F+i79v+eLUx+EOUUhKJwiEc8/+nLxP07KFpcTesBHCkEf/joYrZagR5r8GdwO7eYOU+sJIao2MWCJIlYB67Vwd8hWK2UD6dIyyja7Fxna6x2EYp30Ns9/hndA9tivMpXZeW0AkNf6mlFo6y+lOhUhgis4wqSBBN9+eP4Yc+UV8bGbJhC7h jenkins@jenkins.lineageos.org"
