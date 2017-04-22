@@ -23,6 +23,13 @@
     - nginx
     - jenkins_ssh_slave
     - www
+- name: mirror
+  hosts: cucumber
+  become: yes
+  roles:
+    - mirror
+    # - mirrorbits
+    # - nginx
 - name: build_android
   hosts: acc.umu.se
   roles:

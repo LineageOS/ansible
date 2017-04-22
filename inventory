@@ -13,6 +13,9 @@ cucumber    ansible_host=192.99.39.68
 #potato     not managed in ansible, being replaced w/ cucumber
 
 
+[mirror]
+cucumber    ansible_host=192.99.39.68
+
 [dostrc.org]
 lineageos-build.dotsrc.org ansible_host=130.225.254.124
 

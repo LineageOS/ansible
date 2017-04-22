@@ -1,0 +1,40 @@
+---
+- name: install packages
+  apt:
+    name: "{{item}}"
+    state: present
+  with_items:
+    - rsync
+
+- name: add mirror group
+  group:
+    name: mirror
+
+- name: add mirror user
+  user:
+    name: mirror
+    group: mirror
+    home: /data/mirror
+
+- name: install rsync config ifile
+  template:
+    src: files/rsyncd.conf.j2
+    dest: /etc/rsyncd.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: restart rsync
+  systemd:
+    name: rsync
+    enabled: yes
+    state: restarted
+    daemon-reload: yes
+
+- name: install mirror timestamp rsync
+  cron:
+    name: "mirror timestamp"
+    special_time: "hourly"
+    job: "date +\\%s > /data/mirror/TIMESTAMP"
+    user: mirror
+

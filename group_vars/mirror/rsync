@@ -1,0 +1,17 @@
+---
+rsync:
+  mirrors:
+    - 127.0.0.1         # Local (needed for mirrorbits)
+    - 130.239.18.154    # ftp.acc.umu.se
+    - 141.70.125.14     # mirror.sharkarea.net (unused?)
+    - 129.27.3.13       # mirror.tugraz.at
+    - 89.102.0.150      # mirror.karneval.cz
+    - 141.70.127.21     # mirror.selfnet.de
+    - 129.21.171.98     # mirrors.rit.edu
+    - 210.23.9.20       # lineageos-mirror.super.net.sg
+    - 195.14.50.21      # mirror.corbina.net
+    - 138.201.189.32    # mirror.brauser.io
+    - 128.112.18.21     # mirror.princeton.edu
+    - 202.141.176.110   # ustc.edu.cn
+    - 101.6.6.176       # mirrors.tuna.tsinghua.edu.cn
+    - 101.6.6.63        # mirrors.tuna.tsinghua.edu.cn

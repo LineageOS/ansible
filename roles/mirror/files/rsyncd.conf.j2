@@ -1,0 +1,9 @@
+[mirror]
+path = /data/mirror
+hosts allow = {% for mirror in rsync.mirrors %}{{mirror}} {% endfor %}
+
+hosts deny = *
+list = true
+uid = mirror
+gid = mirror
+read only = true
