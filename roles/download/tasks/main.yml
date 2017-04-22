@@ -1,0 +1,72 @@
+---
+- name: Install dependencies
+  apt:
+    name: "{{item}}"
+    state: present
+  with_items:
+    - python2.7
+    - mongodb
+    - git
+    - virtualenv
+    - redis-server
+    - redis-tools
+- name: add user for download service
+  user:
+    name: download
+    home: /srv/download
+- name: clone download service
+  git:
+    repo: https://github.com/lineageos/lineageos_updater
+    dest: /srv/download/app
+    update: yes
+- name: Install download config
+  copy:
+    src: files/download.app.cfg
+    dest: /srv/download/app/app.cfg
+    owner: download
+    group: download
+    mode: 0600
+- name: install pip requirements
+  pip:
+    requirements: /srv/download/app/requirements.txt
+    virtualenv: /srv/download/venv
+  become: yes
+  become_user: download
+- name: install extra pip modules
+  pip:
+    name: "{{item}}"
+    virtualenv: /srv/download/venv
+  become: yes
+  become_user: download
+  with_items:
+    - gunicorn
+    - redis
+- name: install systemd unit file
+  copy:
+    src: files/download.systemd.unit
+    dest: /etc/systemd/system/download.service
+- name: install nginx config
+  template:
+    src: files/nginx.conf.j2
+    dest: /etc/nginx/sites-enabled/download
+    owner: root
+    group: root
+    mode: 0644
+- name: restart nginx
+  systemd:
+    state: restarted
+    name: nginx
+- name: restart download
+  systemd:
+    state: restarted
+    name: download
+    daemon_reload: yes
+- name: check http status
+  shell: "curl --fail -I -H 'Host: download.lineageos.org' https://localhost/ -k"
+
+- name: import devices
+  shell: FLASK_APP=app.py /srv/download/venv/bin/flask import_devices
+  args:
+    chdir: /srv/download/app/
+  become: yes
+  become_user: download

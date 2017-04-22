@@ -1,0 +1,13 @@
+[Unit]
+Description=Lineageos Download
+After=network.target
+
+[Service]
+Type=simple
+User=download
+WorkingDirectory=/srv/download/app
+ExecStart=/srv/download/venv/bin/gunicorn app:app -b unix:///tmp/download.sock -w 4
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
