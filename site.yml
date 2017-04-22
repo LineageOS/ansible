@@ -10,6 +10,12 @@
   roles:
     - nginx
     - jenkins
+- name: download
+  hosts: download
+  become: yes
+  roles:
+    - nginx
+    - download
 - name: www
   hosts: www
   become: yes
@@ -17,3 +23,7 @@
     - nginx
     - jenkins_ssh_slave
     - www
+- name: build_android
+  hosts: acc.umu.se
+  roles:
+    - build_android

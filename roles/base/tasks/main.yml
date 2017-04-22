@@ -1,13 +1,20 @@
 ---
-- name: Set hostname
+- name: Set hostname (lineage)
   hostname:
     name: "{{inventory_hostname}}.lineageos.org"
+  when: "'.' not in inventory_hostname"
+
+- name: Set hostname (external)
+  hostname:
+    name: "{{inventory_hostname}}"
+  when: "'.' in inventory_hostname"
 - name: Install base packages
   apt:
     name: "{{item}}"
   with_items:
     - zsh
     - htop
+    - sudo
 - name: Create Groups
   group:
     name: "{{item.username}}"
@@ -33,17 +40,16 @@
     dest: "/etc/sudoers.d/{{item.username}}"
   with_items: "{{users}}"
 
-- name: Disallow password authentication
-  lineinfile: dest=/etc/ssh/sshd_config
-              regexp="^PasswordAuthentication"
-              line="PasswordAuthentication no"
-              state=present
-  notify: restart ssh
-
-- name: Disallow root SSH access
-  lineinfile: dest=/etc/ssh/sshd_config
-              regexp="^PermitRootLogin"
-              line="PermitRootLogin no"
-              state=present
-  notify: restart ssh
-
+  #- name: Disallow password authentication
+  #  lineinfile: dest=/etc/ssh/sshd_config
+  #              regexp="^PasswordAuthentication"
+  #              line="PasswordAuthentication no"
+  #              state=present
+  #  notify: restart ssh
+  #
+  #- name: Disallow root SSH access
+  #  lineinfile: dest=/etc/ssh/sshd_config
+  #              regexp="^PermitRootLogin"
+  #              line="PermitRootLogin yes"
+  #              state=present
+  #  notify: restart ssh
