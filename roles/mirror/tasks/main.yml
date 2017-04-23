@@ -23,13 +23,7 @@
     owner: root
     group: root
     mode: 0644
-
-- name: restart rsync
-  systemd:
-    name: rsync
-    enabled: yes
-    state: restarted
-    daemon-reload: yes
+  notify: restart rsync
 
 - name: install mirror timestamp rsync
   cron:
