@@ -30,6 +30,12 @@
     - mirror
     # - mirrorbits
     # - nginx
+- name: gerrit
+  hosts: cucumber
+  become: yes
+  roles:
+      - gerrit
+      - nginx
 - name: build_android
   hosts: acc.umu.se
   roles:

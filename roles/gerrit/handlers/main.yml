@@ -1,0 +1,14 @@
+---
+- name: restart mysql
+  service:
+    name: mysql
+    state: restarted
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted
+- name: restart gerrit
+  shell:
+    /data/gerrit/review/bin/gerrit.sh restart
+  become: yes
+  become_user: gerrit

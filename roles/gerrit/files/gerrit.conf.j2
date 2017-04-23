@@ -1,0 +1,61 @@
+[gerrit]
+        basePath = git
+        canonicalWebUrl = https://review.lineageos.org/
+        serverId = 1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71
+[database]
+        type = mysql
+        database = reviewdb
+        hostname = localhost
+        username = gerrit
+        password = gerrit
+[index]
+        onlineUpgrade = True
+        type = LUCENE
+[auth]
+        contributorAgreements = True
+        trustedOpenID = ^.*$
+        type = OpenID
+[sendemail]
+        smtpServer = localhost
+[container]
+        user = gerrit
+        javaHome = /usr/lib/jvm/java-8-openjdk-amd64
+        war = /data/gerrit/gerrit-2.13.7.war
+        heapLimit = 28G
+[sshd]
+        listenAddress = *:29418
+[httpd]
+        listenUrl = proxy-https://127.0.0.1:8080/
+[cache]
+        directory = cache
+[receive]
+        enableSignedPush = false
+[cache "projects"]
+        memoryLimit = 2048
+[cache "web_sessions"]
+        maxAge = 1 year
+[commentlink "changeid"]
+        link = #/q/$1
+        match = (I[0-9a-f]{8,40})
+[commentlink "commit"]
+        link = #/q/$2
+        match = (^|\\s|[:,!?\\(\\[\\{])([0-9a-f]{7,40})\\b
+[commentlink "cve"]
+        link = https://cve.mitre.org/cgi-bin/cvename.cgi?name=$1
+        match = \\b(CVE\\-\\d{4}\\-\\d+)\\b
+[gitweb]
+        branch = /${project}/tree/${branch}
+        filehistory = $/{project}/blame/${branch}/${file}
+        linkname = GitHub
+        project = /${project}
+        revision = /${project}/commit/${commit}
+        type = custom
+        url = https://github.com
+        urlEncode = False
+[plugins]
+        allowRemoteAdmin = True
+[repository "*"]
+        defaultSubmitType = REBASE_IF_NECESSARY
+[user]
+        email = gerrit@review.lineageos.org
+        name = Gerrit Code Review

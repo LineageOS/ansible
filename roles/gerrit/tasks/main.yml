@@ -1,0 +1,58 @@
+---
+- name: install dependencies
+  apt:
+    name: "{{item}}"
+    state: present
+  with_items:
+    - openjdk-8-jdk
+    - mysql-server
+    - git
+
+- name: gerrit group
+  group:
+    name: gerrit
+
+- name: gerrit user
+  user:
+    name: gerrit
+    home: /data/gerrit
+    group: gerrit
+
+- name: download gerrit war
+  get_url:
+    url: https://gerrit-releases.storage.googleapis.com/gerrit-2.13.7.war
+    dest: /data/gerrit/gerrit-2.13.7.war
+    owner: gerrit
+    group: gerrit
+
+- name: make mysql data dir
+  file:
+    path: /data/mysql
+    state: directory
+    owner: mysql
+    group: mysql
+
+- name: move mysql data dir
+  lineinfile:
+    name: /etc/mysql/mysql.conf.d/mysqld.cnf
+    regexp: "^datadir"
+    line: "datadir		= /data/mysql"
+  notify:
+    - restart mysql
+
+- name: install nginx config
+  template:
+    src: files/nginx.conf.j2
+    dest: /etc/nginx/sites-enabled/review
+  notify:
+    - restart nginx
+
+- name: install gerrit config
+  template:
+    src: files/gerrit.conf.j2
+    dest: /data/gerrit/review/etc/gerrit.conf
+  notify: restart gerrit
+#NOTE - the remainder of this playbook is manual
+#NOTE - java -jar gerrit.war init --batch -d review/
+#NOTE - start with reivew/bin/gerrit.sh start
+#NOTE - good luck!
