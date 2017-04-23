@@ -2,6 +2,10 @@ server {
     listen [::]:80;
     listen 80;
     server_name review.lineageos.org;
+
+    access_log /var/log/nginx/review.access.log;
+    error_log /var/log/nginx/review.error.log;
+
     location /.well-known/ {
         alias /var/www/review.lineageos.org/.well-known/;
     }
@@ -14,6 +18,9 @@ server {
     listen [::]:443 ssl;
     listen 443 ssl;
     server_name review.lineageos.org;
+
+    access_log /var/log/nginx/review.access.log;
+    error_log /var/log/nginx/review.error.log;
 
     ssl_certificate /etc/letsencrypt/live/review.lineageos.org/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/review.lineageos.org/privkey.pem;
