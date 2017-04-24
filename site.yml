@@ -28,8 +28,8 @@
   become: yes
   roles:
     - mirror
-    # - mirrorbits
-    # - nginx
+    - mirrorbits
+    - nginx
 - name: gerrit
   hosts: cucumber
   become: yes

@@ -1,0 +1,29 @@
+Repository: /data/mirror
+Templates: /data/mirrorbits/templates
+OutputMode: auto
+ListenAddress: 127.0.0.1:8081
+GoogleMapsAPIKey: AIzaSyC0Va4BIEo61xNAdK4qdTmYGEWufoPMikk
+Gzip: false
+RedisSentinelMasterName:
+RedisSentinels:
+RedisAddress: 127.0.0.1:6379
+RedisPassword:
+RedisDB: 0
+LogDir: /data/mirrorbits/log
+GeoipDatabasePath: /data/mirrorbits/geoip
+ConcurrentSync: 5
+ScanInterval: 30
+CheckInterval: 1
+RepositoryScanInterval: 5
+Hashes:
+  SHA1: On
+  SHA256: Off
+  MD5: Off
+DisallowRedirects: false
+WeightDistributionRange: 1.5
+DisableOnMissingFile: false
+MaxLinkHeaders: 10
+Fallbacks:
+  - URL: https://lineageos.mirrorhub.io/
+    CountryCode: de
+    ContinentCode: eu

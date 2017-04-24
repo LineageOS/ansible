@@ -1,0 +1,24 @@
+[Unit]
+Description=Mirrorbits redirector
+After=network.target
+Requires=redis-server.service
+
+[Service]
+PIDFile=/var/run/mirrorbits.pid
+ExecStart=/data/mirrorbits/bin/mirrorbits -monitor -D
+ExecReload=/bin/kill -HUP $MAINPID
+ExecStop=-/bin/kill -QUIT $MAINPID
+TimeoutStopSec=5
+KillMode=mixed
+Restart=always
+User=mirrorbits
+Group=mirrorbits
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectHome=yes
+ReadOnlyDirectories=/
+ProtectSystem=true
+
+[Install]
+WantedBy=multi-user.target
+Alias=mirrorbits.service

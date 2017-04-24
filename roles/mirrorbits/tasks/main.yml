@@ -1,0 +1,110 @@
+---
+- name: add golang backports
+  apt_repository:
+    repo: ppa:longsleep/golang-backports
+
+- name: install mirrorbits dependencies
+  apt:
+    name: "{{item}}"
+    state: present
+  with_items:
+    - git
+    - build-essential
+    - libgeoip-dev
+    - redis-server
+    - golang-go
+    - zlib1g-dev
+
+- name: add mirrorbits group
+  group:
+    name: mirrorbits
+    state: present
+
+- name: add mirrorbits user
+  user:
+    name: mirrorbits
+    group: mirrorbits
+    home: /data/mirrorbits
+
+- name: set up mirrorbits heirarchy
+  file:
+    state: directory
+    name: "{{item}}"
+    owner: mirrorbits
+    group: mirrorbits
+    mode: 0755
+  with_items:
+    - /data/mirrorbits/bin
+    - /data/mirrorbits/log
+    - /data/mirrorbits/geoip
+
+- name: download mirrorbits release
+  unarchive:
+    src: https://github.com/etix/mirrorbits/releases/download/v0.4/mirrorbits-v0.4-linux-amd64.tar.gz
+    remote_src: yes
+    dest: /data/mirrorbits/
+    owner: mirrorbits
+    group: mirrorbits
+    creates: /data/mirrorbits/mirrorbits
+
+- name: install mirrorbits to path
+  copy:
+    remote_src: yes
+    src: /data/mirrorbits/mirrorbits/mirrorbits
+    dest: /data/mirrorbits/bin/mirrorbits
+    mode: 0755
+    owner: mirrorbits
+    group: mirrorbits
+
+- name: install mirrorbits conf
+  template:
+    src: files/mirrorbits.conf.j2
+    dest: /etc/mirrorbits.conf
+    mode: 0664
+    owner: root
+    group: root
+
+- name: copy geopip-lite-update
+  template:
+    src: files/geoip-lite-update
+    dest: /data/mirrorbits/bin/geoip-lite-update
+    owner: mirrorbits
+    group: mirrorbits
+    mode: 0755
+
+- name: geoip update crontab
+  cron:
+    name: geoip-update
+    user: mirrorbits
+    special_time: weekly
+    job: /data/mirrorbits/bin/geoip-lite-update
+
+- name: run geoip update
+  command: /data/mirrorbits/bin/geoip-lite-update
+  args:
+    creates: /data/mirrorbits/geoip/GeoIP.dat.gz
+  become: yes
+  become_user: mirrorbits
+
+- name: install systemd unit
+  template:
+    src: files/mirrorbits.service.j2
+    dest: /lib/systemd/system/mirrorbits.service
+    owner: root
+    group: root
+    mode: 0664
+
+- name: enable mirrorbits
+  systemd:
+    enabled: yes
+    name: mirrorbits
+    daemon_reload: true
+
+- name: install nginx config
+  template:
+    src: files/nginx.conf.j2
+    dest: /etc/nginx/sites-enabled/mirrorbits
+    owner: root
+    group: root
+    mode: 0664
+  notify: restart nginx

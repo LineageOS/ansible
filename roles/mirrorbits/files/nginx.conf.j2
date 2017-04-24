@@ -1,0 +1,43 @@
+upstream mirrorbits {
+    server 127.0.0.1:8081;
+}
+
+server {
+    listen [::]:80;
+    listen 80;
+    server_name mirrorbits.lineageos.org;
+
+    error_log /var/log/nginx/mirrorbits.error.log;
+    access_log /var/log/nginx/mirrorbits.access.log;
+
+    location /.well-known/ {
+        alias /var/www/mirrorbits.lineageos.org/.well-known/;
+    }
+    location / {
+        rewrite     ^   https://$server_name$request_uri? permanent;
+    }
+
+}
+
+server {
+    listen [::]:443 ssl;
+    listen 443 ssl;
+    server_name mirrorbits.lineageos.org;
+
+    error_log /var/log/nginx/mirrorbits.error.log;
+    access_log /var/log/nginx/mirrorbits.access.log;
+
+    ssl_certificate /etc/letsencrypt/live/mirrorbits.lineageos.org/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/mirrorbits.lineageos.org/privkey.pem;
+
+
+    location / {
+        include /etc/nginx/proxy_params;
+        proxy_redirect off;
+        proxy_pass http://mirrorbits;
+      }
+      location /status {
+        alias /var/www/mirror.lineageos.org/status;
+      }
+
+}
