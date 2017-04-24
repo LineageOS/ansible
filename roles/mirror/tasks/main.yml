@@ -5,6 +5,7 @@
     state: present
   with_items:
     - rsync
+    - httpie
 
 - name: add mirror group
   group:
@@ -14,7 +15,20 @@
   user:
     name: mirror
     group: mirror
-    home: /data/mirror
+    home: /home/mirror
+
+- name: add mirror authorized_key
+  authorized_key:
+    user: mirror
+    state: present
+    key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCmO1Ihhe+pWJCoCKy+oIwNgtYVr6wgGIXMYC8FmTgckN6n0mBdH0+u7KetlW6Kc+s3ETwYfbDJkuuSzZY8xuceUl5WVJnin4FGgJ80x4dPAecp22rFmrzGm7+G6Ha3BQLHm7lDElECT53h0SAuZI6knhQgoPpoms22RcvZw1sHW7HHiaiLOJVCQ7KtLsdzr9MxzAsF0+XxSsjGBc+24r4KM8NcKIAqnFiqO6aPEOG4Thbp84yPtiaVoRYoHkoB5AArqLQXm0n/BCtRRa5XsUZZb+QITVkdcLblDED5Y85yy8kso0KgUO5wcbEqIwxX30bEb0AjIa45690AyrNlkTgJ mirror@mirror.lineageos.org"
+
+- name: add mirror folder
+  file:
+    state: directory
+    name: /data/mirror
+    owner: mirror
+    group: mirror
 
 - name: install rsync config ifile
   template:
