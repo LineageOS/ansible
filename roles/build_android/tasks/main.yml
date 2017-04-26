@@ -32,6 +32,8 @@
     - libxml2-utils
     - xsltproc
     - unzip
+    - lzop
+    - liblz4-tool
   when: ansible_distribution == "Ubuntu" and ansible_distribution_release == "trusty"
 
 - name: Install Java PPA (trusty)
