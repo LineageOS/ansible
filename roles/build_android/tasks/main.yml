@@ -34,6 +34,7 @@
     - unzip
     - lzop
     - liblz4-tool
+    - maven
   when: ansible_distribution == "Ubuntu" and ansible_distribution_release == "trusty"
 
 - name: Install Java PPA (trusty)
