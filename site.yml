@@ -40,3 +40,4 @@
   hosts: acc.umu.se
   roles:
     - build_android
+  become: yes
