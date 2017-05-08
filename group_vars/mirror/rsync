@@ -9,6 +9,7 @@ rsync:
     - 141.70.127.21     # mirror.selfnet.de
     - 129.21.171.98     # mirrors.rit.edu
     - 210.23.9.20       # lineageos-mirror.super.net.sg
+    - 210.23.6.59       # lineageos-mirror.super.net.sg
     - 195.14.50.21      # mirror.corbina.net
     - 138.201.189.32    # mirror.brauser.io
     - 128.112.18.21     # mirror.princeton.edu
