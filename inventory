@@ -2,13 +2,9 @@
 jenkins     ansible_host=45.56.93.25
 www         ansible_host=45.79.90.247
 download    ansible_host=45.79.79.211
+stats       ansible_host=74.207.241.227
 
-review      ansible_host=192.99.128.232     ansible_port=22458
-jira        ansible_host=192.99.128.234     ansible_port=22458
-app01       ansible_host=192.99.128.235     ansible_port=22458
-mirror      ansbile_host=192.99.128.233     ansible_port=22458
 cucumber    ansible_host=192.99.39.68
-
 #sparta     not managed in ansible (ever)
 #potato     not managed in ansible, being replaced w/ cucumber
 

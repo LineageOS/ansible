@@ -16,6 +16,12 @@
   roles:
     - nginx
     - download
+- name: stats
+  hosts: stats
+  become: yes
+  roles:
+    - nginx
+    - stats
 - name: www
   hosts: www
   become: yes
@@ -34,8 +40,15 @@
   hosts: cucumber
   become: yes
   roles:
-      - gerrit
-      - nginx
+    - gerrit
+    - nginx
+- name: jira
+  hosts: cucumber
+  become: yes
+  tags: jira
+  roles:
+    - jira
+    - nginx
 - name: build_android
   hosts: acc.umu.se
   roles:
