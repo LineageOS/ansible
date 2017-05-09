@@ -1,0 +1,28 @@
+---
+- name: install dependencies
+  apt:
+    name: "{{item}}"
+    state: present
+  with_items:
+    - openjdk-8-jdk
+    - mysql-server
+    - git
+
+- name: JIRA group
+  group:
+    name: jira
+
+- name: jira user
+  user:
+    name: jira
+    home: /data/jira
+    group: jira
+
+- name: install nginx config
+  template:
+    src: files/nginx.conf.j2
+    dest: /etc/nginx/sites-enabled/jira
+  notify:
+    - restart nginx
+
+#NOTE - the remainder of this playbook is manual
