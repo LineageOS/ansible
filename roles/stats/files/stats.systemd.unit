@@ -1,0 +1,13 @@
+[Unit]
+Description=Lineageos Stats
+After=network.target
+
+[Service]
+Type=simple
+User=stats
+WorkingDirectory=/srv/stats/app
+ExecStart=/srv/stats/venv/bin/gunicorn app:app -b unix:///tmp/stats.sock -w 4
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target

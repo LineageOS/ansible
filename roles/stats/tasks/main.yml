@@ -1,0 +1,65 @@
+---
+- name: Install dependencies
+  apt:
+    name: "{{item}}"
+    state: present
+  with_items:
+    - python2.7
+    - mongodb
+    - git
+    - virtualenv
+    - redis-server
+    - redis-tools
+- name: add user for stats service
+  user:
+    name: stats
+    home: /srv/stats
+- name: clone stats service
+  git:
+    repo: https://github.com/lineageos/tribble-tracker
+    dest: /srv/stats/app
+    update: yes
+- name: Install stats config
+  copy:
+    src: files/stats.app.cfg
+    dest: /srv/stats/app/app.cfg
+    owner: stats
+    group: stats
+    mode: 0600
+- name: install pip requirements
+  pip:
+    requirements: /srv/stats/app/requirements.txt
+    virtualenv: /srv/stats/venv
+  become: yes
+  become_user: stats
+- name: install extra pip modules
+  pip:
+    name: "{{item}}"
+    virtualenv: /srv/stats/venv
+  become: yes
+  become_user: stats
+  with_items:
+    - gunicorn
+    - redis
+- name: install systemd unit file
+  copy:
+    src: files/stats.systemd.unit
+    dest: /etc/systemd/system/stats.service
+- name: install nginx config
+  template:
+    src: files/nginx.conf.j2
+    dest: /etc/nginx/sites-enabled/stats
+    owner: root
+    group: root
+    mode: 0644
+- name: restart nginx
+  systemd:
+    state: restarted
+    name: nginx
+- name: restart stats
+  systemd:
+    state: restarted
+    name: stats
+    daemon_reload: yes
+- name: check http status
+  shell: "curl --fail -I -H 'Host: stats.lineageos.org' https://localhost/ -k"
