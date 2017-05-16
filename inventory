@@ -3,6 +3,7 @@ jenkins     ansible_host=45.56.93.25
 www         ansible_host=45.79.90.247
 download    ansible_host=45.79.79.211
 stats       ansible_host=74.207.241.227
+cve_tracker ansible_host=23.239.4.56
 
 cucumber    ansible_host=192.99.39.68
 #sparta     not managed in ansible (ever)

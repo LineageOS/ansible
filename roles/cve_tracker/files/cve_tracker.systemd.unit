@@ -1,0 +1,13 @@
+[Unit]
+Description=Lineageos CVE Tracker
+After=network.target
+
+[Service]
+Type=simple
+User=cve_tracker
+WorkingDirectory=/srv/cve_tracker/app
+ExecStart=/srv/cve_tracker/venv/bin/gunicorn app:app -b unix:///tmp/cve_tracker.sock -w 4
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
