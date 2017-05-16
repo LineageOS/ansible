@@ -62,4 +62,4 @@
     name: cve_tracker
     daemon_reload: yes
 - name: check http status
-  shell: "curl --fail -I -H 'Host: cve2.lineageos.org' http://localhost/ -k"
+  shell: "curl --fail -I -H 'Host: cve.lineageos.org' https://localhost/ -k"
