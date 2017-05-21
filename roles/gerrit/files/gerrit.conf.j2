@@ -43,6 +43,9 @@
 [commentlink "cve"]
         link = https://cve.mitre.org/cgi-bin/cvename.cgi?name=$1
         match = \\b(CVE\\-\\d{4}\\-\\d+)\\b
+[commentlink "jira"]
+        link = https://jira.lineageos.org/browse/$1
+        match = \\b([A-Z][A-Z0-9]+\\-[1-9]\\d*)\\b
 [gitweb]
         branch = /${project}/tree/${branch}
         filehistory = $/{project}/blame/${branch}/${file}
