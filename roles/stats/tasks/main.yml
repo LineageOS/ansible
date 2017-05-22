@@ -63,3 +63,5 @@
     daemon_reload: yes
 - name: check http status
   shell: "curl --fail -I -H 'Host: stats.lineageos.org' https://localhost/ -k"
+  args:
+    warn: false

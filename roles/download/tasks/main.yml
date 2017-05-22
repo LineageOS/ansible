@@ -63,6 +63,8 @@
     daemon_reload: yes
 - name: check http status
   shell: "curl --fail -I -H 'Host: download.lineageos.org' https://localhost/ -k"
+  args:
+    warn: false
 
 - name: import devices
   shell: FLASK_APP=app.py /srv/download/venv/bin/flask import_devices
