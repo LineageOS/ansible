@@ -35,10 +35,10 @@
 [cache "web_sessions"]
         maxAge = 1 year
 [commentlink "changeid"]
-        link = #/q/$1
+        link = "#/q/$1"
         match = (I[0-9a-f]{8,40})
 [commentlink "commit"]
-        link = #/q/$2
+        link = "#/q/$2"
         match = (^|\\s|[:,!?\\(\\[\\{])([0-9a-f]{7,40})\\b
 [commentlink "cve"]
         link = https://cve.mitre.org/cgi-bin/cvename.cgi?name=$1
