@@ -16,3 +16,4 @@ rsync:
     - 202.141.176.110   # ustc.edu.cn
     - 101.6.6.176       # mirrors.tuna.tsinghua.edu.cn
     - 101.6.6.63        # mirrors.tuna.tsinghua.edu.cn
+    - 131.188.12.211    # ftp.fau.de
