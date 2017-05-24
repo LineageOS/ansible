@@ -1,0 +1,18 @@
+---
+- name: update
+  hosts: all
+  become: yes
+  tasks:
+    - name: update apt
+      apt:
+        upgrade: dist
+        update_cache: yes
+
+- name: reboot
+  hosts: acc.umu.se
+  become: yes
+  tasks:
+    - name: Reboot system if required
+      command: shutdown -r now 'Rebooting to complete system upgrade'
+      args:
+        removes: /var/run/reboot-required
