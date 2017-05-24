@@ -41,8 +41,8 @@ server {
 
     }
 
-    location ~* /api/v1/.*/unofficial/.* {
-        return 404;
+    location /robots.txt {
+        alias /var/www/stats.lineageos.org/robots.txt;
     }
 
     location /static {
