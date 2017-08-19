@@ -20,8 +20,8 @@
 
 - name: download gerrit war
   get_url:
-    url: https://gerrit-releases.storage.googleapis.com/gerrit-2.13.7.war
-    dest: /data/gerrit/gerrit-2.13.7.war
+    url: https://gerrit-releases.storage.googleapis.com/gerrit-2.14.1.war
+    dest: /data/gerrit/gerrit-2.14.1.war
     owner: gerrit
     group: gerrit
 

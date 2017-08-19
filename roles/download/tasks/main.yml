@@ -34,7 +34,7 @@
   become_user: download
 - name: install updater application
   pip:
-    name: /srv/download/app/updater
+    name: /srv/download/app
     virtualenv: /srv/download/venv
   become: yes
   become_user: download
@@ -73,7 +73,7 @@
     warn: false
 
 - name: import devices
-  shell: FLASK_APP=app.py /srv/download/venv/bin/flask import_devices
+  shell: FLASK_APP=updater.app /srv/download/venv/bin/flask import_devices
   args:
     chdir: /srv/download/app/
   become: yes
