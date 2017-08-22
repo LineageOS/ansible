@@ -1,0 +1,10 @@
+- name: restart nginx
+  systemd:
+    state: restarted
+    name: nginx
+- name: restart cve_tracker
+  systemd:
+    state: restarted
+    name: cve_tracker
+    daemon_reload: yes
+

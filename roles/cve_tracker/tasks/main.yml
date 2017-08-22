@@ -19,6 +19,7 @@
     repo: https://github.com/lineageos/cve_tracker
     dest: /srv/cve_tracker/app
     update: yes
+  notify: restart cve_tracker
 - name: Install cve_tracker config
   template:
     src: files/cve_tracker.app.cfg.j2
@@ -26,12 +27,14 @@
     owner: cve_tracker
     group: cve_tracker
     mode: 0600
+  notify: restart cve_tracker
 - name: install pip requirements
   pip:
     requirements: /srv/cve_tracker/app/requirements.txt
     virtualenv: /srv/cve_tracker/venv
   become: yes
   become_user: cve_tracker
+  notify: restart cve_tracker
 - name: install extra pip modules
   pip:
     name: "{{item}}"
@@ -41,10 +44,12 @@
   with_items:
     - gunicorn
     - redis
+  notify: restart cve_tracker
 - name: install systemd unit file
   copy:
     src: files/cve_tracker.systemd.unit
     dest: /etc/systemd/system/cve_tracker.service
+  notify: restart cve_tracker
 - name: install nginx config
   template:
     src: files/nginx.conf.j2
@@ -52,16 +57,10 @@
     owner: root
     group: root
     mode: 0644
-- name: restart nginx
-  systemd:
-    state: restarted
-    name: nginx
-- name: restart cve_tracker
-  systemd:
-    state: restarted
-    name: cve_tracker
-    daemon_reload: yes
+  notify: restart nginx
+- meta: flush_handlers
 - name: check http status
   shell: "curl --fail -I -H 'Host: cve.lineageos.org' https://localhost/ -k"
   args:
     warn: false
+  changed_when: false
