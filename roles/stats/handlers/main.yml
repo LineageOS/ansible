@@ -1,0 +1,10 @@
+- name: restart nginx
+  systemd:
+    state: restarted
+    name: nginx
+- name: restart stats
+  systemd:
+    state: restarted
+    name: stats
+    daemon_reload: yes
+

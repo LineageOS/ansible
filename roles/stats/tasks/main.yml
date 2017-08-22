@@ -14,11 +14,13 @@
   user:
     name: stats
     home: /srv/stats
+  notify: restart stats
 - name: clone stats service
   git:
     repo: https://github.com/lineageos/tribble-tracker
     dest: /srv/stats/app
     update: yes
+  notify: restart stats
 - name: Install stats config
   copy:
     src: files/stats.app.cfg
@@ -26,12 +28,14 @@
     owner: stats
     group: stats
     mode: 0600
+  notify: restart stats
 - name: install pip requirements
   pip:
     requirements: /srv/stats/app/requirements.txt
     virtualenv: /srv/stats/venv
   become: yes
   become_user: stats
+  notify: restart stats
 - name: install extra pip modules
   pip:
     name: "{{item}}"
@@ -41,10 +45,12 @@
   with_items:
     - gunicorn
     - redis
+  notify: restart stats
 - name: install systemd unit file
   copy:
     src: files/stats.systemd.unit
     dest: /etc/systemd/system/stats.service
+  notify: restart stats
 - name: install nginx config
   template:
     src: files/nginx.conf.j2
@@ -52,15 +58,8 @@
     owner: root
     group: root
     mode: 0644
-- name: restart nginx
-  systemd:
-    state: restarted
-    name: nginx
-- name: restart stats
-  systemd:
-    state: restarted
-    name: stats
-    daemon_reload: yes
+  notify: restart nginx
+- meta: flush_handlers
 - name: check http status
   shell: "curl --fail -I -H 'Host: stats.lineageos.org' https://localhost/ -k"
   args:
