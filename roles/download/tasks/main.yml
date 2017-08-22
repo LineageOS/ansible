@@ -14,11 +14,13 @@
   user:
     name: download
     home: /srv/download
+  notify: restart download
 - name: clone download service
   git:
     repo: https://github.com/lineageos/lineageos_updater
     dest: /srv/download/app
     update: yes
+  notify: restart download
 - name: Install download config
   copy:
     src: files/download.app.cfg
@@ -26,18 +28,21 @@
     owner: download
     group: download
     mode: 0600
+  notify: restart download
 - name: install pip requirements
   pip:
     requirements: /srv/download/app/requirements.txt
     virtualenv: /srv/download/venv
   become: yes
   become_user: download
+  notify: restart download
 - name: install updater application
   pip:
     name: /srv/download/app
     virtualenv: /srv/download/venv
   become: yes
   become_user: download
+  notify: restart download
 - name: install extra pip modules
   pip:
     name: "{{item}}"
@@ -47,10 +52,12 @@
   with_items:
     - gunicorn
     - redis
+  notify: restart download
 - name: install systemd unit file
   copy:
     src: files/download.systemd.unit
     dest: /etc/systemd/system/download.service
+  notify: restart download
 - name: install nginx config
   template:
     src: files/nginx.conf.j2
@@ -58,15 +65,8 @@
     owner: root
     group: root
     mode: 0644
-- name: restart nginx
-  systemd:
-    state: restarted
-    name: nginx
-- name: restart download
-  systemd:
-    state: restarted
-    name: download
-    daemon_reload: yes
+  notify: restart nginx
+- meta: flush_handlers
 - name: check http status
   shell: "curl --fail -I -H 'Host: download.lineageos.org' https://localhost/ -k"
   args:
