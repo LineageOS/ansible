@@ -32,12 +32,6 @@
     virtualenv: /srv/download/venv
   become: yes
   become_user: download
-- name: install updater application
-  pip:
-    name: /srv/download/app/updater
-    virtualenv: /srv/download/venv
-  become: yes
-  become_user: download
 - name: install extra pip modules
   pip:
     name: "{{item}}"
