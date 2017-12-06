@@ -36,13 +36,6 @@
   become: yes
   become_user: download
   notify: restart download
-- name: install updater application
-  pip:
-    name: /srv/download/app
-    virtualenv: /srv/download/venv
-  become: yes
-  become_user: download
-  notify: restart download
 - name: install extra pip modules
   pip:
     name: "{{item}}"
