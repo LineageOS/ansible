@@ -20,3 +20,8 @@ users:
     shell: /bin/bash
     ssh_key:
       - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDcijx2mUB/Tj7WiCda6WF9N+94f2sDdyrKLPLiJ3XYMWP1dCtpJeCTs71ObPKDSoSqgtpKGiKge8V1xc0L2IWmsrmb425Skcfqmvt9r8JSIB79Q/Zj8viI7U7SFAusN6tfl86k1Y6uZe/kwPC6Z7/06DRVXoCldINE/q9iXazc/4j0XCs0WEjFUT3eK5bz+PmRGkcCTC9pOyU6+Fi4dJe+l6R8CQGwKF9OYn9inzZ/L7Ut+U1pgvywDKOfZA0n5d2HokvEzH8y4SPuntC2syzloY11tlA1zGcLYYseiGU9FhMqdCSuVRWoTbwMCX6md665FgEv/QsHuzfjfgwTTv4F ansible@lineageos"
+  - username: forkbomb
+    groups: ['sudo']
+    shell: /usr/bin/zsh
+    ssh_key:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC5kg8hCSoQ8Yx+Se3nLd7E1dPux2nxBltWxgfg50b64jJlolzTFe6aydx8opcRZyjUXU1m4EnOI6GD+8A3bhcVoUYHMpN2/iFIRBt6S3NqUNOB6lKPHiOz4kSAXhULRf84XTH0hVWy58F7ygisWy/jqBW5yh+g0bM2GZsHcVhC5Qjm765whJKYEg/1OkKMPVS7aMS6Sb2fIkMcYvI02/oxulUPZuLPGWymRRrZXlkSqa0WQRBXHCxYE+Iyx3nUZCC3uh79LhMB3tqQ31pfCqiInxT/HHB73yhohFQotl+bCjrpv4dCGjg9DDvacZPi858dbdbUqNgp5tXMn41P3qMX simon@lineageos.org"
