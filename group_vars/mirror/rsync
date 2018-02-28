@@ -23,6 +23,7 @@ rsync:
     - 202.38.95.110     # ustc.edu.cn
     - 202.141.160.110   # ustc.edu.cn
     - 202.141.176.110   # ustc.edu.cn
+    - 173.212.243.115   # mirror.kumi.systems
   mirrors6:
     - 2001:878:346::116 # mirrors.dotsrc.org
     - 2402:f000:1:408::91 # mirrors.tuna.tsinghua.edu.cn
