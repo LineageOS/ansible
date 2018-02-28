@@ -16,6 +16,8 @@ rsync:
     - 202.141.176.110   # ustc.edu.cn
     - 101.6.6.176       # mirrors.tuna.tsinghua.edu.cn
     - 101.6.6.63        # mirrors.tuna.tsinghua.edu.cn
+    - 101.6.8.226       # mirrors.tuna.tsinghua.edu.cn
+    - 101.6.8.227       # mirrors.tuna.tsinghua.edu.cn
     - 131.188.12.211    # ftp.fau.de
     - 130.225.254.116   # mirrors.dotsrc.org
     - 202.38.95.110     # ustc.edu.cn
@@ -23,3 +25,5 @@ rsync:
     - 202.141.176.110   # ustc.edu.cn
   mirrors6:
     - 2001:878:346::116 # mirrors.dotsrc.org
+    - 2402:f000:1:408::91 # mirrors.tuna.tsinghua.edu.cn
+    - 2402:f000:1:408::92 # mirrors.tuna.tsinghua.edu.cn
